@@ -1,35 +1,24 @@
 """
 This script was created for use by Dancers' Symposium at Carnegie Mellon University.
-
 This script reads a CSV file containing piece rankings for dancers
 and prints out files for each piece with the audition number and gender
 of each interested dancer.
-
 Please change the DANCER_FILE variable to the name of the file to be read
 and also modify HEADERS and ENDING_COLUMNS if the csv file format changes.
-
 The headers expected on the CSV file are in the HEADERS array, followed by a column
 per dance piece, followed by the ENDING_COLUMNS array.
-
 Printouts will be printed to the audition_printouts folder. Please clear out this
 folder or rename any previous folders before running this script.
-
 This script will also print out any lines of the csv file that have an integrity
 error in it (duplicate dance names, duplicate or missing audition numbers,
 duplicate rankings, skipped rankings).
-
 NOTE: Any dancer rows that have errors will NOT be included in the printouts. You should
 fix these errors and run the script again if you'd like them to be included.
-
 Contact Karin for any questions!
-
 author: Karin Tsai (ktsai11@gmail.com)
 created: August 2014
-
 ---
-
 RUNNING INSTRUCTIONS:
-
 - Open Terminal
 - Navigate to the choreographer_printouts folder, where this file is
   (for example, "cd /Users/ktsai11/Desktop/DS/choreographer_printouts")
@@ -37,12 +26,10 @@ RUNNING INSTRUCTIONS:
 - Change the DANCER_FILE variable below to whatever file you want to read. Make
   sure that file is also in the choreographer_printouts folder.
 - Type and execute "python print_audition_sheets.py" in Terminal
-
 """
 
-DANCER_FILE = 'DANCER_RANKINGS_2014.csv'
+DANCER_FILE = 'Dancer Ranking - F17.csv'
 PRINTOUT_PATH = 'audition_printouts/'
-
 HEADERS = ['date', 'first', 'last', 'id', 'gender', 'num_pieces']
 ENDING_COLUMNS = ['agreement']
 
