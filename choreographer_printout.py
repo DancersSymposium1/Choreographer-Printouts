@@ -28,13 +28,17 @@ RUNNING INSTRUCTIONS:
 - Type and execute "python print_audition_sheets.py" in Terminal
 """
 
-DANCER_FILE = 'Dancer Ranking - F17.csv'
+DANCER_FILE = 'rawranking.csv'
 PRINTOUT_PATH = 'audition_printouts/'
-HEADERS = ['date', 'first', 'last', 'id', 'gender', 'num_pieces']
+HEADERS = ['date', 'email', 'first', 'last', 'id', 'gender', 'num_pieces']
 ENDING_COLUMNS = ['agreement']
 
+def func(a):
+    x,y = a
+    return x
+
 if __name__ == '__main__':
-    dancer_ranking_file = open(DANCER_FILE, 'rU')
+    dancer_ranking_file = open(DANCER_FILE, 'r')
 
     # create map of pieces to dancers
     dancer_map = {}
@@ -43,11 +47,13 @@ if __name__ == '__main__':
         if i == 0: # this is the header line
             # parse piece names from header
             columns = line.strip().split(',')
-            DANCE_NAMES = columns[len(HEADERS):-len(ENDING_COLUMNS)]
+            DANCE_NAMES = columns[len(HEADERS):len(columns)]
             duplicates = set([d for d in DANCE_NAMES if DANCE_NAMES.count(d) > 1])
             if duplicates:
-                print 'Duplicate dance names: %s' % ', '.join(list(duplicates))
+                # print('Duplicate dance names: %s' % ', '.join(list(duplicates)))
                 exit()
+            for dn in DANCE_NAMES:
+                dancer_map[dn] = []
             continue
 
         columns = line.strip().split(',')
@@ -56,48 +62,50 @@ if __name__ == '__main__':
 
         # integrity checks
         if not _id:
-            print 'No audition number: %s' % line
+            print('No audition number: %s' % line)
             continue
 
         _id = int(_id)
 
         if _id in dancer_ids:
-            print 'Duplicate audition number (%d):\n%s%s' % (_id, line, dancer_ids[_id])
+            print('Duplicate audition number (%d):\n%s%s' % (_id, line, dancer_ids[_id]))
             continue
 
         rankings = set()
         dance_indices = []
-        preferences = columns[len(HEADERS):-len(ENDING_COLUMNS)]
+        preferences = columns[len(HEADERS):len(columns)]
         error = False
         for dance_index, ranking in enumerate(preferences):
             if ranking:
                 ranking = int(ranking)
                 if ranking in rankings:
-                    print 'Duplicate ranking (%d): %s' % (ranking, line)
+                    print('Duplicate ranking (%d): %s' % (ranking, line))
                     error = True
                 rankings.add(ranking)
                 dance_indices.append(dance_index)
 
         for ranking in range(1, len(rankings)):
             if ranking not in rankings:
-                print 'Skipped ranking (%d): %s' % (ranking, line)
-                error = True
+                print('Skipped ranking (%d): %s' % (ranking, line))
+                error =True
 
         # add to dancer map if checks pass
         if not error:
             for dance_index in dance_indices:
-                dancer_map.setdefault(DANCE_NAMES[dance_index], []).append((_id, gender))
+                dancer_map[DANCE_NAMES[dance_index]].append((_id, gender))
             dancer_ids[_id] = line
 
     dancer_ranking_file.close()
 
     # print files
-    for dance_name, dancers in dancer_map.iteritems():
+    for dance_name, dancers in dancer_map.items():
+        # print(dancer_map.items())
         f = open(PRINTOUT_PATH + '%s.txt' % dance_name, 'w+')
-        print >> f, '********************'
-        print >> f, dance_name
-        print >> f, '********************'
-        sorted_dancers = sorted(dancers, key=lambda (d, _): d)
-        for (dancer_id, gender) in sorted_dancers:
-            print >> f, dancer_id, gender
+        f.write('********************')
+        f.write(dance_name)
+        f.write('********************\n')
+        dancers.sort(key=func)
+        for (dancer_id, gender) in dancers:
+            # print(dancer_id)
+            f.write(str(dancer_id) + "\n")
         f.close()
