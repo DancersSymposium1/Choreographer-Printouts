@@ -34,7 +34,7 @@ RUNNING INSTRUCTIONS:
 - Type and execute "python print_audition_sheets.py" in Terminal
 """
 
-DANCER_FILE = 'dancer_prefs_afternoon.csv'
+DANCER_FILE = 'test_sheet.csv'
 PRINTOUT_PATH = 'audition_printouts_afternoon/'
 HEADERS = ['date', 'email', 'first', 'last', 'id', 'pronouns', 'num_pieces']
 

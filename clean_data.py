@@ -9,6 +9,7 @@ Errors should be clearly printed so that we can confirm the necessary changes wi
 
 import pandas as pd
 import numpy as np
+import math
 
 DANCER_FILE = 'test_sheet.csv'
 
@@ -71,6 +72,7 @@ for row in df.index:
 
   correct_rankings = [i for i in range(1,num_preffed+1)]
   user_rankings = list((row_data[7:]))
-  if(set(correct_rankings) ^ set(user_rankings) != set()):
+  if(set(correct_rankings) ^ set(sorted([x for x in user_rankings if not math.isnan(x)]))):
+    print(set(correct_rankings) ^ set(sorted([x for x in user_rankings if not math.isnan(x)])))
     print("\n====Error! Duplicate or invalid rankings====\n")
     print(row_data,"\n")
