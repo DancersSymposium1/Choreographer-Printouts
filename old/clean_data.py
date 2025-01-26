@@ -11,11 +11,11 @@ import pandas as pd
 import numpy as np
 import math
 
-DANCER_FILE = 'test_sheet.csv'
+DANCER_FILE = 'prefs_all.csv'
 
 
 print("\n\n##################### checking data #######################\n")
-df = pd.read_csv(DANCER_FILE,delimiter=",")
+df = pd.read_csv(DANCER_FILE,delimiter=",",encoding='utf-8')
 
 # Headings are based on Google Forms automatic headings; might change year by year
 df.rename({'Timestamp':'timestamp',

@@ -34,12 +34,12 @@ RUNNING INSTRUCTIONS:
 - Type and execute "python print_audition_sheets.py" in Terminal
 """
 
-DANCER_FILE = 'test_sheet.csv'
-PRINTOUT_PATH = 'audition_printouts_afternoon/'
+DANCER_FILE = 'prefs_all.csv'
+PRINTOUT_PATH = 'printouts_all/'
 HEADERS = ['date', 'email', 'first', 'last', 'id', 'pronouns', 'num_pieces']
 
 if __name__ == '__main__':
-    dancer_ranking_file = open(DANCER_FILE, 'r')
+    dancer_ranking_file = open(DANCER_FILE, 'r',encoding='utf-8')
 
     # create map of pieces to dancers
     dancer_map = {}
