@@ -1,10 +1,10 @@
 import pandas as pd
 
 NUM_PIECES = 19 #not including tap
-PREF_FILE = 'makeup_prefs.csv'
+PREF_FILE = 'prefs_2pm.csv'
 
 df = pd.read_csv(PREF_FILE)
-pieces = ["A - Alex & Alisa", "B - Karina", "C - Jillian", "E - Caroline", "F - Nina & Lily",
+pieces = ["A - Alex & Alisa (Beginner)", "B - Karina (Beginner)", "C - Jillian (Beginner)", "E - Caroline", "F - Nina & Lily",
           "G - Sydney","H - Tyler & Kina", "I - Alex", "J - Suzy", "K - Juliann", "L - Tiffany", "M - Vera",
           "N - Stanley", "O - Zachary", "P - Paige", "Q - Camille", "R - Jianing & Lydia", "S - Helen", "T -  Valia"]
 
@@ -23,6 +23,8 @@ for piece in pieces:
     interested = []
     for i in range(2,NUM_PIECES+1):
         interested+=df[df[f'Rankings [{i}]']==piece]["id"].tolist()
+
+    interested = set(interested)
         
     for first_placer in first_placers:
         print(f'{first_placer}*')
